@@ -2,8 +2,14 @@
 
 ## 下载
 
+1. 使用Gitee
 ```
 git clone https://gitee.com/SHIKEAIXY/Random_Image
+```
+
+2. 使用Github
+```
+git clone https://github.com/SHIKEAIXY/Random_Image
 ```
 
 ## 使用
