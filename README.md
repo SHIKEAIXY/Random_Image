@@ -13,6 +13,12 @@ git clone https://gitee.com/SHIKEAIXY/Random_Image
 2. 放置图片
  - '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'
 
+使用可爱真寻？
+
+```
+git clone --depth 1 -b Episode https://gitee.com/SHIKEAIXY/zhenxun-wallpaper-picture.git ./Random_Image/Img
+```
+
 3. 安装依赖
 
 ```
@@ -30,3 +36,4 @@ python main.py
 ```
 http://127.0.0.1:5366/Fafa
 ```
+
