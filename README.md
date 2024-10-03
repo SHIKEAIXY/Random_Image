@@ -22,7 +22,7 @@ pip install Flask
 4. 运行
 
 ```
-python app.py
+python main.py
 ```
 
 5. 浏览器访问
