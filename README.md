@@ -22,7 +22,7 @@ git clone https://github.com/SHIKEAIXY/Random_Image
 使用可爱真寻？
 
 ```
-git clone --depth 1 -b Episode https://gitee.com/SHIKEAIXY/zhenxun-wallpaper-picture.git ./Random_Image/Img
+git clone --depth 1 -b Episode https://gitee.com/SHIKEAIXY/zhenxun-wallpaper-picture.git ./Random_Image/Img/ZhenXun_wallpaper
 ```
 
 3. 安装依赖
