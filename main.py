@@ -3,6 +3,7 @@ import socket
 import random
 import logging
 import colorlog
+import requests
 from flask import Flask, jsonify, send_from_directory, make_response
 
 Image_path = './Img/'  # 图片路径
@@ -76,8 +77,17 @@ def get_local_ip():
         logger.error(f"获取内网IP失败：{e}")
         return "127.0.0.1"
 
+def get_public_ip():
+    try:
+        response = requests.get('https://icanhazip.com')
+        return response.text
+    except Exception as e:
+        logger.error(f"获取公网IP失败：{e}")
+        return None
+
 if __name__ == '__main__':
     local_ip = get_local_ip()
+    public_ip = get_public_ip()
     logging.getLogger('werkzeug').setLevel(logging.ERROR)
     import sys
     cli = sys.modules['flask.cli']
@@ -89,7 +99,11 @@ if __name__ == '__main__':
             print(f"{yellow_text}服务已启动（{mode_str}）{reset_text}")
             print(f"{blue_text}本地访问地址：{green_text}http://127.0.0.1:{Port}/{Route_name}{reset_text}")
             print(f"{blue_text}内网访问地址：{green_text}http://{local_ip}:{Port}/{Route_name}{reset_text}")
+            if public_ip:
+                public_ip = public_ip.rstrip()
+                print(f"{blue_text}公网访问地址：{green_text}http://{public_ip}:{Port}/{Route_name}{reset_text}")
             print(f"{yellow_text}如需外部访问，请开放{Port}端口号{reset_text}")
         app.run(debug=Mode, port=Port, host='0.0.0.0')
     except Exception as e:
         logger.error(f"服务启动失败: {e}")
+

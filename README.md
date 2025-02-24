@@ -12,7 +12,7 @@ git clone https://gitee.com/SHIKEAIXY/Random_Image
 git clone https://github.com/SHIKEAIXY/Random_Image
 ```
 
-## 使用
+## 配置
 
 1. 打开./Random_Image/Img/
 
@@ -25,21 +25,37 @@ git clone https://github.com/SHIKEAIXY/Random_Image
 git clone --depth 1 -b Episode https://gitee.com/SHIKEAIXY/zhenxun-wallpaper-picture.git ./Random_Image/Img/ZhenXun_wallpaper
 ```
 
-3. 安装依赖
+## 安装依赖
+
+#### 1在Win上安装依赖
 
 ```
-pip install flask colorlog
+pip install flask colorlog requests
 ```
 
-4. 运行
 
+#### 2在Linux上安装依赖
+
+```
+apt install python3-pip -y && pip install flask colorlog requests
+```
+
+## 运行
+
+#### 1在Win上运行
 ```
 python main.py
 ```
 
-5. 浏览器访问
+#### 2在Linux上运行
+```
+python3 main.py
+```
+
+## 浏览器访问
 
 ```
 http://127.0.0.1:5366/Fafa
 ```
 
+如需外部访问需开放5366（默认端口号）
