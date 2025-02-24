@@ -8,6 +8,7 @@ from flask import Flask, jsonify, send_from_directory, make_response
 Image_path = './Img/'  # 图片路径
 Port = '5366'          # Flask 运行的端口号
 Route_name = 'Fafa'    # 路由名称
+Mode = True            # 调试模式，修改为布尔类型
 app = Flask(__name__)
 
 # 配置日志
@@ -78,13 +79,17 @@ def get_local_ip():
 if __name__ == '__main__':
     local_ip = get_local_ip()
     logging.getLogger('werkzeug').setLevel(logging.ERROR)
+    import sys
+    cli = sys.modules['flask.cli']
+    cli.show_server_banner = lambda *x: None  # 禁用 Flask 启动时的横幅信息
 
     try:
         if os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
-            print(f"{yellow_text}服务已启动{reset_text}")
+            mode_str = "当前处于调试模式" if Mode else "当前处于生产模式"
+            print(f"{yellow_text}服务已启动（{mode_str}）{reset_text}")
             print(f"{blue_text}本地访问地址：{green_text}http://127.0.0.1:{Port}/{Route_name}{reset_text}")
             print(f"{blue_text}内网访问地址：{green_text}http://{local_ip}:{Port}/{Route_name}{reset_text}")
             print(f"{yellow_text}如需外部访问，请开放{Port}端口号{reset_text}")
-        app.run(debug=True, port=Port, host='0.0.0.0')
+        app.run(debug=Mode, port=Port, host='0.0.0.0')
     except Exception as e:
         logger.error(f"服务启动失败: {e}")
