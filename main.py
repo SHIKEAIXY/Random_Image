@@ -6,9 +6,9 @@ import colorlog
 from flask import Flask, jsonify, send_from_directory, make_response
 
 Image_path = './Img/'  # 图片路径
-Port = '5366'          # Flask 运行的端口号
+Port = '5366'          # 端口号
 Route_name = 'Fafa'    # 路由名称
-Mode = True            # 调试模式，修改为布尔类型
+Mode = True            # 调试模式，True为开启 False为关闭
 app = Flask(__name__)
 
 # 配置日志
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     cli.show_server_banner = lambda *x: None  # 禁用 Flask 启动时的横幅信息
 
     try:
-        if os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
+        if not Mode or os.environ.get('WERKZEUG_RUN_MAIN') == 'true':
             mode_str = "当前处于调试模式" if Mode else "当前处于生产模式"
             print(f"{yellow_text}服务已启动（{mode_str}）{reset_text}")
             print(f"{blue_text}本地访问地址：{green_text}http://127.0.0.1:{Port}/{Route_name}{reset_text}")
