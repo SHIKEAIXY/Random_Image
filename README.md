@@ -28,7 +28,7 @@ git clone --depth 1 -b Episode https://gitee.com/SHIKEAIXY/zhenxun-wallpaper-pic
 3. 安装依赖
 
 ```
-pip install Flask
+pip install flask colorlog
 ```
 
 4. 运行
