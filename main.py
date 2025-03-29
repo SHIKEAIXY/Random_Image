@@ -6,13 +6,34 @@ import colorlog
 import requests
 from flask import Flask, jsonify, send_from_directory, make_response
 
-Image_path = './Img/'  # 图片路径
-Port = '5366'          # 端口号
-Route_name = 'Fafa'    # 路由名称
-Mode = True            # 调试模式，True为开启 False为关闭
+tutorial_file = '教程.txt'
+if not os.path.exists(tutorial_file):
+    with open(tutorial_file, 'w', encoding='utf-8') as f:
+        f.write("1. 编辑config.py进行修改\n2. 将图片放置在Img/中'.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'\n3. 点击程序启动")
+
+img_folder = 'Img'
+if not os.path.exists(img_folder):
+    os.makedirs(img_folder)
+
+config_file = 'config.py'
+if not os.path.exists(config_file):
+    with open(config_file, 'w', encoding='utf-8') as f:
+        f.write("Image_path = './Img/'  # 图片路径\n")
+        f.write("Port = '5366'          # 端口号\n")
+        f.write("Route_name = 'Fafa'    # 路由名称\n")
+        f.write("Mode = True            # 调试模式，True为开启 False为关闭\n")
+    print("配置文件已生成请前往教程.txt查看使用教程")
+    import sys
+    sys.exit()
+
+from config import Image_path, Port, Route_name, Mode
+
+if os.environ.get('WERKZEUG_RUN_MAIN') == 'true' or not Mode:
+    print("BY SHIKEAIXY 小雨")
+
 app = Flask(__name__)
 
-# 配置日志
+# 配置日志格式
 handler = colorlog.StreamHandler()
 handler.setFormatter(colorlog.ColoredFormatter(
     '%(log_color)s%(asctime)s%(reset)s - %(levelname)s - %(message)s',
@@ -106,4 +127,3 @@ if __name__ == '__main__':
         app.run(debug=Mode, port=Port, host='0.0.0.0')
     except Exception as e:
         logger.error(f"服务启动失败: {e}")
-

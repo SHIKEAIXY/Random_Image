@@ -1,6 +1,10 @@
 # 随机图API程序
 
-## 下载
+## 使用
+
+下载Releases运行程序
+
+## 开发
 
 1. 使用Gitee
 ```
@@ -10,19 +14,6 @@ git clone https://gitee.com/SHIKEAIXY/Random_Image
 2. 使用Github
 ```
 git clone https://github.com/SHIKEAIXY/Random_Image
-```
-
-## 配置
-
-1. 打开./Random_Image/Img/
-
-2. 放置图片
- - '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'
-
-使用可爱真寻？
-
-```
-git clone --depth 1 -b Episode https://gitee.com/SHIKEAIXY/zhenxun-wallpaper-picture.git ./Random_Image/Img/ZhenXun_wallpaper
 ```
 
 ## 安装依赖
@@ -40,6 +31,19 @@ pip install flask colorlog requests
 apt install python3-pip -y && pip install flask colorlog requests
 ```
 
+## 配置
+
+1. 打开./Random_Image/Img/
+
+2. 放置图片
+ - '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'
+
+ 使用可爱真寻？
+
+```
+git clone --depth 1 -b Episode https://gitee.com/SHIKEAIXY/zhenxun-wallpaper-picture.git ./Random_Image/Img/ZhenXun_wallpaper
+```
+
 ## 运行
 
 #### 1在Win上运行
@@ -50,6 +54,11 @@ python main.py
 #### 2在Linux上运行
 ```
 python3 main.py
+```
+
+## 编译 
+```
+pyinstaller --onefile --add-data "config.py;." Random_Image.py
 ```
 
 ## 浏览器访问

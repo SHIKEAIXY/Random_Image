@@ -1,0 +1,3 @@
+1. 编辑config.py进行修改
+2. 将图片放置在Img/中'.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'
+3. 点击exe程序启动
