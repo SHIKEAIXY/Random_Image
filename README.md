@@ -4,6 +4,14 @@
 
 下载Releases运行程序
 
+## 浏览器访问
+
+```
+http://127.0.0.1:5366/Fafa
+```
+
+如需外部访问需开放5366（默认端口号）
+
 ## 开发
 
 1. 使用Gitee
@@ -58,13 +66,5 @@ python3 main.py
 
 ## 编译 
 ```
-pyinstaller --onefile --add-data "config.py;." Random_Image.py
+pyinstaller --onefile Random_Image.py
 ```
-
-## 浏览器访问
-
-```
-http://127.0.0.1:5366/Fafa
-```
-
-如需外部访问需开放5366（默认端口号）
