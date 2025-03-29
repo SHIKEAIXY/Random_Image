@@ -1,4 +1,5 @@
 import os
+import sys
 import socket
 import random
 import logging
@@ -6,32 +7,26 @@ import colorlog
 import requests
 from flask import Flask, jsonify, send_from_directory, make_response
 
-tutorial_file = '教程.txt'
-if not os.path.exists(tutorial_file):
-    with open(tutorial_file, 'w', encoding='utf-8') as f:
-        f.write("1. 编辑config.py进行修改\n2. 将图片放置在Img/中'.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'\n3. 点击程序启动")
+# 获取当前目录
+current_dir = os.getcwd()
 
-img_folder = 'Img'
-if not os.path.exists(img_folder):
-    os.makedirs(img_folder)
+# 拼接图片路径
+Image_path = os.path.join(current_dir, 'Img')
 
-config_file = 'config.py'
-if not os.path.exists(config_file):
-    with open(config_file, 'w', encoding='utf-8') as f:
-        f.write("Image_path = './Img/'  # 图片路径\n")
-        f.write("Port = '5366'          # 端口号\n")
-        f.write("Route_name = 'Fafa'    # 路由名称\n")
-        f.write("Mode = True            # 调试模式，True为开启 False为关闭\n")
-    print("配置文件已生成请前往教程.txt查看使用教程")
-    import sys
-    sys.exit()
+# 从 config.py 中导入变量
+from config import Port, Route_name, Mode
 
-from config import Image_path, Port, Route_name, Mode
+# 创建 Flask 应用实例
+app = Flask(__name__)
 
+# 第一个输出
 if os.environ.get('WERKZEUG_RUN_MAIN') == 'true' or not Mode:
     print("BY SHIKEAIXY 小雨")
 
-app = Flask(__name__)
+green_text = "\033[92m"
+blue_text = "\033[94m"
+yellow_text = "\033[93m"
+reset_text = "\033[0m"
 
 # 配置日志格式
 handler = colorlog.StreamHandler()
@@ -54,21 +49,64 @@ handler.setFormatter(colorlog.ColoredFormatter(
         }
     }
 ))
+
+# 添加文件处理器
+log_file = 'app.log'
+file_handler = logging.FileHandler(log_file)
+file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+
 logger = colorlog.getLogger()
 logger.addHandler(handler)
+logger.addHandler(file_handler)
 logger.setLevel(logging.INFO)
 
-green_text = "\033[92m"
-blue_text = "\033[94m"
-yellow_text = "\033[93m"
-reset_text = "\033[0m"
+tutorial_file = '教程.txt'
+if not os.path.exists(tutorial_file):
+    with open(tutorial_file, 'w', encoding='utf-8') as f:
+        f.write("1. 编辑config.py进行修改\n2. 将图片放置在Img/中'.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'\n可前往https://gitee.com/SHIKEAIXY/zhenxun-wallpaper-picture可前往此处下载可爱真寻2000张+\n3. 点击程序启动")
+
+img_folder = 'Img'
+if not os.path.exists(img_folder):
+    os.makedirs(img_folder)
+
+if getattr(sys, 'frozen', False):
+    exe_dir = os.path.dirname(sys.executable)
+    config_file = os.path.join(exe_dir, 'config.py')
+else:
+    config_file = 'config.py'
+
+# 仅在主进程中输出配置文件路径和是否存在的信息
+if os.environ.get('WERKZEUG_RUN_MAIN') == 'true' or not Mode:
+    # 输出 config_file 路径
+    logger.info(f"配置文件路径: {config_file}")
+    # 输出文件是否存在
+    logger.info(f"配置文件是否存在: {os.path.exists(config_file)}")
+
+if not os.path.exists(config_file):
+    try:
+        with open(config_file, 'w', encoding='utf-8') as f:
+            f.write("Image_path = './Img/'  # 图片路径\n")
+            f.write("Port = '5366'          # 端口号\n")
+            f.write("Route_name = 'Fafa'    # 路由名称\n")
+            f.write("Mode = True            # 调试模式，True为开启 False为关闭\n")
+        logger.info("配置文件已生成请前往教程.txt查看使用教程")
+        input("按回车键退出程序...")  # 等待用户按回车键
+        sys.exit()  # 配置文件创建完成后终止程序
+    except Exception as e:
+        logger.error(f"创建配置文件时出错: {e}")
+        input("按回车键退出程序...")  # 等待用户按回车键
+        sys.exit()
 
 # 加载图片列表
 def load_images():
     images = []
     try:
-        for root, _, files in os.walk(Image_path):
-            images.extend([os.path.join(root, f) for f in files if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'))])
+        if os.environ.get('WERKZEUG_RUN_MAIN') == 'true' or not Mode:
+            for root, _, files in os.walk(Image_path):
+                for f in files:
+                    if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp')):
+                        images.append(os.path.join(root, f))
+            logger.info(f"加载到 {len(images)} 张图片") 
     except Exception as e:
         logger.error(f"加载图片时出错: {e}")
     return images
