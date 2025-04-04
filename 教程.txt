@@ -1,4 +1,4 @@
-1. 编辑config.py进行修改
-2. 将图片放置在Img/中'.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'
+1. 编辑config.py进行修改(可默认)
+2. 将图片放置在Img/中 (支持'.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp')
 可前往https://gitee.com/SHIKEAIXY/zhenxun-wallpaper-picture可前往此处下载可爱真寻2000张+
-3. 点击程序启动
+3. 重新点击程序启动
