@@ -14,14 +14,18 @@ if os.name == 'nt':
         ctypes.windll.kernel32.SetConsoleTitleW("BY SHIKEAIXY & Random_Image")
     except:
         pass
-else:
-    print(f"\033]0;BY SHIKEAIXY & Random_Image\007", end='', flush=True)
+elif sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
+    try:
+        sys.stdout.write("\033]0;BY SHIKEAIXY & Random_Image\007")
+        sys.stdout.flush()
+    except:
+        pass
 
 # 获取当前目录
 if getattr(sys, 'frozen', False):
     current_dir = os.path.dirname(sys.executable)
 else:
-    current_dir = os.getcwd()
+    current_dir = os.path.dirname(os.path.abspath(__file__))
 
 config_file = os.path.join(current_dir, 'config.py')
 
@@ -110,9 +114,9 @@ try:
     if not config.Port.isdigit() or not (0 < int(config.Port) <= 65535):
         raise ValueError(f"端口号必须为1-65535之间的数字，当前为: {config.Port}")
         
-    Image_path = os.path.join(current_dir, config.Image_path.strip('./'))
+    Image_path = os.path.join(current_dir, *config.Image_path.strip('./').replace('\\', '/').strip('/').split('/'))
     if not os.path.exists(Image_path):
-        os.makedirs(Image_path)
+        os.makedirs(Image_path, exist_ok=True)
     if os.path.exists(visit_count_file):
         with open(visit_count_file, 'r', encoding='utf-8') as f:
             total_visits = int(f.read())
