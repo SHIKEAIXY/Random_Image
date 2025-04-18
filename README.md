@@ -3,7 +3,6 @@
 ## 使用
 
 下载Releases运行程序
- - Windows外的系统可以直接跑源码...
 
 ## 浏览器访问
 
@@ -69,8 +68,3 @@ python3 main.py
 ```
 pyinstaller --onefile Random_Image.py
 ```
-
-## 免责声明
-
-1. 功能仅限内部交流与小范围使用，请勿将 `Random_Image` 用于任何以盈利为目的的场景；
-2. 素材均来自于网络，仅供交流学习使用，如有侵权请联系，会立即删除。
