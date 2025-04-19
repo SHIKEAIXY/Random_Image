@@ -62,7 +62,7 @@ python Random_Image.py
 
 #### 2在Linux上运行
 ```
-python3 mRandom_Image.py
+python3 Random_Image.py
 ```
 
 ## 编译 
