@@ -57,12 +57,12 @@ git clone --depth 1 -b Episode https://gitee.com/SHIKEAIXY/zhenxun-wallpaper-pic
 
 #### 1在Win上运行
 ```
-python main.py
+python Random_Image.py
 ```
 
 #### 2在Linux上运行
 ```
-python3 main.py
+python3 mRandom_Image.py
 ```
 
 ## 编译 
